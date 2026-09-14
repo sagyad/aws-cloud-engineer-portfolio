@@ -42,7 +42,7 @@ jobs:
           aws-region: eu-west-2
 
       - name: Sync files to S3
-        run: aws s3 sync. s3://sagar-cloud-portfolio-website --exclude ".git/*" --exclude ".github/*" --exclude ".gitignore"
+        run: aws s3 sync . s3://sagar-cloud-portfolio-website --exclude ".git/*" --exclude ".github/*" --exclude ".gitignore"
 
       - name: Invalidate CloudFront cache
         run: aws cloudfront create-invalidation --distribution-id E36KTCUJC2P9WT --paths "/*"
