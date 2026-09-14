@@ -1,0 +1,62 @@
+
+#!/usr/bin/env bash
+# ============================================
+# 05-assignments.sh
+# Add internet route to public route table ([0.0.0.0/0] → IGW):
+# Associate public subnets with public route table:
+# Detailed Steps
+# 1. Created VPC (10.0.0.0/16 — 65,536 IPs)
+# 2.  Created Public Subnet 1  ([IP_ADDRESS]) — eu-west-2a
+# 3.  Created Public Subnet 2  ([IP_ADDRESS]) — eu-west-2b
+# 4.  Created Private Subnet 1 (10.0.3.0/24) — eu-west-2a
+# 5.  Created Private Subnet 2 (10.0.4.0/24) — eu-west-2b
+# 6.  Created Internet Gateway (IGW)
+# 7.  Attached IGW to VPC
+# 8.  Created Public Route Table
+# 9.  Created Private Route Table
+# 10. Added route: [IP_ADDRESS] → IGW on Public Route Table
+# 11. Associated Public RT → Public Subnet 1
+# 12. Associated Public RT → Public Subnet 2
+# 13. Associated Private RT → Private Subnet 1
+# 14. Associated Private RT → Private Subnet 2
+# ============================================
+
+# Step 1 = Add internet route to public route table ([0.0.0.0/0] → IGW):
+aws ec2 create-route --route-table-id rtb-0b473fbcd57b10311 --destination-cidr-block 0.0.0.0/0 --gateway-id igw-0ef64b8f3f1637861
+
+# Step 2 = Associate public subnets with public route table:
+aws ec2 associate-route-table --route-table-id rtb-0b473fbcd57b10311 --subnet-id subnet-06f360db6792e1045
+aws ec2 associate-route-table --route-table-id rtb-0b473fbcd57b10311 --subnet-id subnet-0fd30853f0e58ae19
+
+
+# Step 3 = Associate private subnets with private route table:
+aws ec2 associate-route-table --route-table-id rtb-0f3987e317742b82d --subnet-id subnet-06367c99d23a5f2ce
+aws ec2 associate-route-table --route-table-id rtb-0f3987e317742b82d --subnet-id subnet-086fc20f5ccfda265
+
+
+
+# Bastion Security Group (public — allows SSH from your IP only):
+aws ec2 create-security-group --group-name sagar-bastion-sg --description "Bastion host - SSH from my IP only" --vpc-id vpc-0c763a8fa021abdab --query 'GroupId' --output text
+aws ec2 create-tags --resources sg-0176b81cf3d542fff --tags Key=Name,Value=sagar-bastion-sg
+#sg1=sg-0176b81cf3d542fff 
+
+# Private Server Security Group (private — allows SSH from bastion only):
+aws ec2 create-security-group --group-name sagar-private-sg --description "Private server - SSH from bastion only" --vpc-id vpc-0c763a8fa021abdab --query 'GroupId' --output text
+aws ec2 create-tags --resources sg-08a022f3ff4323a0b --tags Key=Name,Value=sagar-private-sg
+#sg2=sg-08a022f3ff4323a0b
+
+# Add SSH rule to Bastion SG (only YOUR IP can SSH in):
+aws ec2 authorize-security-group-ingress --group-id sg-0176b81cf3d542fff --protocol tcp --port 22 --cidr 15.248.2.150/32
+# "SecurityGroupRuleId": "sgr-06a4406b6fb02469b"
+# "SecurityGroupRuleArn": "arn:aws:ec2:eu-west-2:865189667468:security-group-rule/sgr-06a4406b6fb02469b"
+
+# Add SSH rule to Private SG (only Bastion SG can SSH in)
+aws ec2 authorize-security-group-ingress --group-id sg-08a022f3ff4323a0b --protocol tcp --port 22 --source-group sg-0176b81cf3d542fff
+# "SecurityGroupRuleId": "sgr-058d2bc9622586137",
+# "SecurityGroupRuleArn": "arn:aws:ec2:eu-west-2:865189667468:security-group-rule/sgr-058d2bc9622586137"
+
+
+
+
+# bastion host = 13.40.87.251
+# private server = 10.0.3.128    

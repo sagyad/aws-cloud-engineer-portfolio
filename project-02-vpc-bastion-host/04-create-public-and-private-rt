@@ -1,0 +1,20 @@
+
+#!/usr/bin/env bash
+# ============================================
+# 04-create-public-and-private-rt.sh
+# Creates 2 Subnets, Public and Private
+# And Tag them
+# ============================================
+
+# Step 1: Public Route Table
+
+aws ec2 create-route-table --vpc-id vpc-0c763a8fa021abdab --query 'RouteTable.RouteTableId' --output text
+
+# Step 2: Private Route Table
+aws ec2 create-route-table --vpc-id vpc-0c763a8fa021abdab --query 'RouteTable.RouteTableId' --output text
+
+# Step 2: Create Tags to Public and Private RT
+aws ec2 create-tags --resources rtb-0b473fbcd57b10311 --tags Key=Name,Value=sagar-public-rt
+aws ec2 create-tags --resources rtb-0f3987e317742b82d --tags Key=Name,Value=sagar-private-rt
+
+
