@@ -6,20 +6,20 @@ on:
       - main
 
 jobs:
-    test:
+  test:
     runs-on: ubuntu-latest
     steps:
-     - name: Checkout code
-     - uses: actions/checkout@v4
-      
-     - name: Check index.html exists
-       run: test -f index.html && echo "index.html found" ||exit 1
-     
-     - name: Validate HTML Structure
-       run: grep -q "<html" index.html && echo "Valid HTML structure" ||exit 1 
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-     - name: Check no secrets exposed
-       run: |
+      - name: Check index.html exists
+        run: test -f index.html && echo "✅ index.html found" || exit 1
+
+      - name: Validate HTML structure
+        run: grep -q "<html" index.html && echo "✅ Valid HTML structure" || exit 1
+
+      - name: Check no secrets exposed
+        run: |
           if grep -riq "aws_secret\|aws_key\|password" index.html; then
             echo "❌ Secrets found in code!"
             exit 1
@@ -27,7 +27,8 @@ jobs:
             echo "✅ No secrets exposed"
           fi
 
-deploy:
+  deploy:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -39,10 +40,9 @@ deploy:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
-    
-     
+
       - name: Sync files to S3
-        run: aws s3 sync . s3://sagar-cloud-portfolio-website --exclude ".git/*" --exclude ".github/*" --exclude ".gitignore"
+        run: aws s3 sync. s3://sagar-cloud-portfolio-website --exclude ".git/*" --exclude ".github/*" --exclude ".gitignore"
 
       - name: Invalidate CloudFront cache
         run: aws cloudfront create-invalidation --distribution-id E36KTCUJC2P9WT --paths "/*"
