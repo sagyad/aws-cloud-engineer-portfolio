@@ -1,0 +1,1 @@
+{"errorMessage": "'project_name'", "errorType": "KeyError", "requestId": "b2c6bc78-1a99-4533-b6d4-3455524705d3", "stackTrace": ["  File \"/var/task/lambda_function.py\", line 42, in lambda_handler\n    'project_name': body['project_name'],\n"]}

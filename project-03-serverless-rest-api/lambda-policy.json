@@ -1,0 +1,26 @@
+{
+    "Version":"2012-10-17",
+    "Statement":[
+        {
+            "Sid":"DynamoDBAccess",
+            "Effect":"Allow",
+            "Action":[
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:DeleteItem"
+            ],
+            "Resource":"arn:aws:iam::865189667468:role/lambda-portfolio-api-role"
+        },
+        {
+            "Sid":"CloudWatchLogs",
+            "Effect":"Allow",
+            "Action":[
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource":"arn:aws:logs:eu-west-2:865189667468:*"
+        }
+    ]
+}
