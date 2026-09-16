@@ -36,12 +36,17 @@ def lambda_handler(event, context):
 
     # POST /projects — create a project
     if http_method == 'POST' and path == '/projects':
-        body = json.loads(event['body'])
+        raw_body = event.get('body', '{}')
+        if isinstance(raw_body, str):
+            body = json.loads(raw_body)
+        else:
+            body = raw_body
+
         item = {
             'project_id': str(uuid.uuid4()),
-            'project_name': body['name'],
+            'project_name': body.get('project_name', ''),
             'description': body.get('description', ''),
-            'aws_services': body.get('aws_services', []),
+            'aws_services': body.get('aws_services', ''),
             'status': body.get('status', 'Not Started'),
             'github_url': body.get('github_url', ''),
             'created_date': datetime.utcnow().isoformat()
