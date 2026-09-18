@@ -1,0 +1,16 @@
+Step 0: VPC A -     (10.0.0.0/16) = vpc-0c763a8fa021abdab
+Step 1:  Create VPC B (10.1.0.0/16) = vpc-06d5e891e6185bbb6
+Step 2:  Tag VPC = project4a-vpc
+Step 3:  Enable DNS hostnames
+Step 4:  Create 1 Public Subnet (10.1.1.0/24)
+Step 5:  Tag Subnet
+Step 6:  Enable auto-assign public IP on subnet
+Step 7:  Create IGW
+Step 8:  Attach IGW to VPC
+Step 9:  Create Route Table
+Step 10: Add Route (0.0.0.0/0 → IGW)
+Step 11: Associate Route Table to Subnet
+Step 12: Create Peering Connection (VPC-A ↔ VPC-B)
+Step 13: Accept Peering
+Step 14: Add route in VPC-A RT (10.1.0.0/16 → Peering)
+Step 15: Add route in VPC-B RT (10.0.0.0/16 → Peering)
