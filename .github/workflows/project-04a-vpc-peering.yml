@@ -1,0 +1,35 @@
+
+name: "Project 4a — VPC Peering Docs"
+
+on:
+  push:
+    paths:
+      - "project-04a-vpc-peering/**"
+    branches: [main]
+  pull_request:
+    paths:
+      - "project-04a-vpc-peering/**"
+    branches: [main]
+
+jobs:
+  validate-docs:
+    name: "Validate Documentation"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check README exists
+        run: |
+          if [ ! -f project-04a-vpc-peering/README.md ]; then
+            echo "README.md is missing!"
+            exit 1
+          fi
+          echo "✅ README.md exists"
+
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: "project-04a-vpc-peering/**/*.md"
+
