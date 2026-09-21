@@ -42,3 +42,4 @@ output "rds_endpoint" {
   value       = aws_db_instance.main.endpoint # prints: project5-db.abc123.us-east-1.rds.amazonaws.com:3306
 }
 
+
