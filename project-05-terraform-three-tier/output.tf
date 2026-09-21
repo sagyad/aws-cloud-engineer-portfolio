@@ -10,7 +10,7 @@
 # =============================================
 output "vpc_id" {
   description = "ID of the VPC"
-  value       = aws_vpc.main.id                                                   # prints: vpc-0abc123...
+  value       = aws_vpc.main.id # prints: vpc-0abc123...
 }
 
 # =============================================
@@ -18,7 +18,7 @@ output "vpc_id" {
 # =============================================
 output "alb_dns_name" {
   description = "ALB DNS name — paste this in browser to see your app!"
-  value       = aws_lb.main.dns_name                                              # prints: project5-alb-123456.us-east-1.elb.amazonaws.com
+  value       = aws_lb.main.dns_name # prints: project5-alb-123456.us-east-1.elb.amazonaws.com
 }
 
 # =============================================
@@ -26,7 +26,7 @@ output "alb_dns_name" {
 # =============================================
 output "web_1_public_ip" {
   description = "Public IP of Web Server 1"
-  value       = aws_instance.web_1.public_ip                                      # prints: 54.xx.xx.xx
+  value       = aws_instance.web_1.public_ip # prints: 54.xx.xx.xx
 }
 
 output "web_2_public_ip" {
@@ -39,6 +39,6 @@ output "web_2_public_ip" {
 # =============================================
 output "rds_endpoint" {
   description = "RDS MySQL endpoint — use this to connect from app tier"
-  value       = aws_db_instance.main.endpoint                                     # prints: project5-db.abc123.us-east-1.rds.amazonaws.com:3306
+  value       = aws_db_instance.main.endpoint # prints: project5-db.abc123.us-east-1.rds.amazonaws.com:3306
 }
 

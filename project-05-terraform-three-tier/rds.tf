@@ -29,7 +29,7 @@ resource "aws_db_instance" "main" {
   allocated_storage      = 20                            # storage in GB
   db_name                = "project5db"                  # name of the database created inside RDS
   username               = "admin"                       # master username
-  password               = "project51234"                  # master password (we'll improve this later!)
+  password               = "project51234"                # master password (we'll improve this later!)
   db_subnet_group_name   = aws_db_subnet_group.main.name # use our private subnet group from above
   vpc_security_group_ids = [aws_security_group.db_sg.id] # DB SG — allows 3306 from app tier only
   multi_az               = false                         # false = single AZ (saves cost for learning)
