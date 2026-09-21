@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "project-05-terraform-three-tier/**"
+      - ".github/workflows/project-05-terraform.yml"
     branches: [main]
   pull_request:
     paths:
