@@ -6,11 +6,11 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "sy-terraform-state-bucket-eu-west-2"
-    key            = "project-05/terraform.tfstate"
-    region         = "eu-west-2"
-    dynamodb_table = "ddb-sy-terraform-lock"
-    encrypt        = true
+    bucket       = "sy-terraform-state-bucket-eu-west-2"
+    key          = "project-05/terraform.tfstate"
+    region       = "eu-west-2"
+    use_lockfile = true
+    encrypt      = true
   }
 
 }
