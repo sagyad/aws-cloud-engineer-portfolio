@@ -119,7 +119,6 @@ jobs:
   apply:
     name: "Terraform Apply"
     runs-on: ubuntu-latest
-    needs: [format,validate,test,plan]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     defaults:
       run:
