@@ -5,11 +5,11 @@
 
 
 output "device_farm_project_arn" {
-    description = "ARN of the Device Farm Project"
-    value = aws_devicefarm_project.main.arn
+  description = "ARN of the Device Farm Project"
+  value       = aws_devicefarm_project.main.arn
 }
 
 output "device_pool_arn" {
-    description = "ARN of the Android device pool"
-    value = aws_devicefarm_device_pool.android.arn
+  description = "ARN of the Android device pool"
+  value       = aws_devicefarm_device_pool.android.arn
 }

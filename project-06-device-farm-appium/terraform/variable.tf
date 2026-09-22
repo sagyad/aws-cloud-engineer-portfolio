@@ -4,7 +4,7 @@
 # --------------------------------------------------
 
 variable "project_name" {
-    description = "Project name prefix for all resources"
-    type = string
-    default = "project6-device-farm"
+  description = "Project name prefix for all resources"
+  type        = string
+  default     = "project6-device-farm"
 }

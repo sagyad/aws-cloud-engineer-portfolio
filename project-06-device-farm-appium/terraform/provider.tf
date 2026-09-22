@@ -14,13 +14,13 @@ terraform {
   }
   backend "s3" {
     bucket       = "sy-terraform-state-bucket-eu-west-2"
-    key          = "project-06/terraform.tfstate"       
-    region       = "eu-west-2"                          # bucket is in eu-west-2
+    key          = "project-06/terraform.tfstate"
+    region       = "eu-west-2" # bucket is in eu-west-2
     use_lockfile = true
     encrypt      = true
   }
 }
 
 provider "aws" {
-  region = "us-west-2"                                  # Device Farm only in us-west-2
+  region = "us-west-2" # Device Farm only in us-west-2
 }

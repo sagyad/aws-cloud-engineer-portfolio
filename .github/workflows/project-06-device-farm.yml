@@ -54,7 +54,7 @@ jobs:
        uses: hashicorp/setup-terraform@v3
 
      - name: Terraform Init
-       run: terrform init -backend=false
+       run: terraform init -backend=false
 
      - name: Terraform Validate
        run: terraform validate
@@ -76,7 +76,7 @@ jobs:
           python-version: "3.11"
 
      - name: Install Dependencies
-       run: pip install -r requirments.txt
+       run: pip install -r requirements.txt
 
      - name: Run Tests
        run: pytest -v --tb=short
