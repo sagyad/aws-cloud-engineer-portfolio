@@ -1,5 +1,6 @@
 
 name: "Project 7 - Monitoring and Alerts"
+
 on:
   push:
     paths:
@@ -17,56 +18,78 @@ permissions:
   pull-requests: write
 
 env:
-  WORKING_DIR: "project-07-monitoring-and-alerts/terraform"
-  AWS_REGION: "eu-west-2"
+  WORKING_DIR: project-07-monitoring-and-alerts/terraform
+  AWS_REGION: eu-west-2
 
 jobs:
   format:
     name: "Terraform Format"
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    defaults:
-      run:
-        working-directory: ${{ env.WORKING_DIR }}
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Format Check
+      - name: Terraform Format Check
+        working-directory: ${{ env.WORKING_DIR }}
         run: terraform fmt -check -recursive
 
   validate:
     name: "Terraform Validate"
     runs-on: ubuntu-latest
+    needs: format
     if: github.event_name == 'pull_request'
-    defaults:
-      run:
-        working-directory: ${{ env.WORKING_DIR }}
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
+        working-directory: ${{ env.WORKING_DIR }}
         run: terraform init -backend=false
 
       - name: Terraform Validate
+        working-directory: ${{ env.WORKING_DIR }}
         run: terraform validate
+
+  test:
+    name: "Run Tests"
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform init -backend=false
+
+      - name: Check Required Files
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          for file in provider.tf variables.tf locals.tf ec2.tf vpc.tf security.tf alb.tf sns.tf alarm.tf dashboard.tf outputs.tf; do
+            if [ ! -f "$file" ]; then
+              echo "Missing: $file" && exit 1
+            fi
+            echo "Found: $file"
+          done
 
   plan:
     name: "Terraform Plan"
     runs-on: ubuntu-latest
-    needs: ["validate", "format"]
-    defaults:
-      run:
-        working-directory: ${{ env.WORKING_DIR }}
+    needs: test
+    if: github.event_name == 'pull_request'
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Setup Terraform
@@ -80,11 +103,12 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Init
-        run: terraform init
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform init -lock=false
 
       - name: Terraform Plan
-        run: terraform plan -no-color -lock=false -detailed-exitcode
-        continue-on-error: true
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform plan -no-color -lock=false
         env:
           TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
 
@@ -92,11 +116,8 @@ jobs:
     name: "Terraform Apply"
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    defaults:
-      run:
-        working-directory: ${{ env.WORKING_DIR }}
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Setup Terraform
@@ -110,10 +131,12 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Init
-        run: terraform init
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform init -lock=false
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve 
-        env: 
-          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}"
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform apply -auto-approve -lock=false
+        env:
+          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
 
