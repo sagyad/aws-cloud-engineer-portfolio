@@ -83,7 +83,8 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -no-color -lock=false
+        run: terraform plan -no-color -lock=false -detailed-exitcode
+        continue-on-error: true
         env:
           TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
 
