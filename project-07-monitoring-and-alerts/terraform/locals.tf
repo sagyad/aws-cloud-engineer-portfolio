@@ -6,7 +6,7 @@
 locals {
   # Naming prefix - used in every resources name
 
-  name_prefix = "${var.project_name}-${var.aws_region}"
+  name_prefix = "p7-monitor"
 
   # Common Tags  - user for every resource
   common_tags = {
