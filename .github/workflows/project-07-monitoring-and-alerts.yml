@@ -84,6 +84,8 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -no-color
+        env:
+          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
 
   apply:
     name: "Terraform Apply"
@@ -110,5 +112,7 @@ jobs:
         run: terraform init
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var="alarm_email=${{ secrets.ALARM_EMAIL }}"
+        run: terraform apply -auto-approve 
+        env: 
+          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}"
 
