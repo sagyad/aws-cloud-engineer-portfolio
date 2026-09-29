@@ -115,5 +115,5 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve 
         env: 
-          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}"
+          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
 
