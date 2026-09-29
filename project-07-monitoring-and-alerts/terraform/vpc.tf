@@ -28,7 +28,7 @@ resource "aws_internet_gateway" "main" {
 # Public Subnet-1
 resource "aws_subnet" "public_1" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = local.public_subnet_cidr
+  cidr_block              = local.public_subnet_1_cidr
   availability_zone       = "${var.aws_region}a"
   map_public_ip_on_launch = true
 
@@ -40,7 +40,7 @@ resource "aws_subnet" "public_1" {
 # Public Subnet-2
 resource "aws_subnet" "public_2" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = local.public_subnet_cidr
+  cidr_block              = local.public_subnet_2_cidr
   availability_zone       = "${var.aws_region}b"
   map_public_ip_on_launch = true
 

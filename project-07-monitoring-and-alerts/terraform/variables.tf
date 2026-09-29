@@ -64,7 +64,7 @@ variable "alarm_email" {
 variable "cloudtrail_bucket" {
   description = "S3 bucket name for CloudTrail logs"
   type        = string
-  default =""
+  default     = ""
 }
 
 variable "key_name" {
