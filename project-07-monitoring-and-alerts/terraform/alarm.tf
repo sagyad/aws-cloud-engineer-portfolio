@@ -39,7 +39,7 @@ resource "aws_cloudwatch_metric_alarm" "alb" {
   ok_actions    = [aws_sns_topic.main.arn]
 
   dimensions = {
-    LoadBalancer = aws_lb.main.id
+    LoadBalancer = aws_lb.main.arn_suffix
   }
 
   tags = merge(local.common_tags, {

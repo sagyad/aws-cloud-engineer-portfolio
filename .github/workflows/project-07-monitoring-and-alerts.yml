@@ -110,8 +110,5 @@ jobs:
         run: terraform init
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
-
-      - name: Terraform Apply
         run: terraform apply -auto-approve -var="alarm_email=${{ secrets.ALARM_EMAIL }}"
 

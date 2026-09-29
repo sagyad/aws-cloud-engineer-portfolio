@@ -16,8 +16,9 @@ locals {
   }
 
   # Subnets CIDR - caculated using cidrsubnet 
-  public_subnet_cidr  = cidrsubnet(var.vpc_cidr, 8, 1)
-  private_subnet_cidr = cidrsubnet(var.vpc_cidr, 8, 2)
+  public_subnet_1_cidr  = cidrsubnet(var.vpc_cidr, 8, 1)
+  public_subnet_2_cidr = cidrsubnet(var.vpc_cidr,8, 2)
+  private_subnet_cidr = cidrsubnet(var.vpc_cidr, 8, 3)
 
   load_balancer_type = "application"
   storage_bucket     = "sy-terraform-state-bucket-eu-west-2"
