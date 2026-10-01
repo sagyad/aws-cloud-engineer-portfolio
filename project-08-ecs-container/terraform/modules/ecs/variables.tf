@@ -28,5 +28,25 @@ variable "execution_role_arn" {
 variable "desired_count" {
   description = "Desired Count"
   type        = number
+}
+
+variable "cpu" {
+  description = "CPU units for ECS task"
+  type        = number
+}
+
+variable "memory" {
+  description = "Memory for ECS task in MB"
+  type        = number
+}
+
+variable "container_image" {
+  description = "Docker image to deploy"
+  type        = string
+}
+
+variable "container_port" {
+  description = "Port the container listens on"
+  type        = number
   default     = 2
 }
