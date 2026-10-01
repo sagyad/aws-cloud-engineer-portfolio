@@ -8,7 +8,7 @@
 module "vpc" {
   source       = "./modules/vpc"
   project_name = var.project_name
-  vpc_cidr     = var.vpc_cidr    
+  vpc_cidr     = var.vpc_cidr
 
 }
 
@@ -16,9 +16,9 @@ module "vpc" {
 module "ecs" {
   source = "./modules/ecs"
 
-  project_name       = var.project_name
+  project_name = var.project_name
 
-  desired_count   = var.desired_count       # passes tfvars → module
+  desired_count   = var.desired_count # passes tfvars → module
   cpu             = var.cpu
   memory          = var.memory
   container_image = var.container_image
