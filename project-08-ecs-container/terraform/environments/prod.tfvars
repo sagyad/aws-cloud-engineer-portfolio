@@ -1,10 +1,10 @@
 # ---------------------------------------------------------------------------------------------------------------------
 # STAGING ENVIRONMENT VARIABLES
 # ---------------------------------------------------------------------------------------------------------------------
-project_name   = "project8-prod"
-vpc_cidr       = "10.2.0.0/16"
-container_port = 80
-desired_count  = 4
-cpu            = 1024
-memory         = 2048
+project_name    = "project8-prod"
+vpc_cidr        = "10.2.0.0/16"
+container_port  = 80
+desired_count   = 4
+cpu             = 1024
+memory          = 2048
 container_image = "nginx:latest"

@@ -1,10 +1,10 @@
 # ---------------------------------------------------------------------------------------------------------------------
 # STAGING ENVIRONMENT VARIABLES
 # ---------------------------------------------------------------------------------------------------------------------
-project_name   = "project8-staging"
-vpc_cidr       = "10.1.0.0/16"
-container_port = 80
-desired_count  = 2
-cpu            = 512
-memory         = 1024
+project_name    = "project8-staging"
+vpc_cidr        = "10.1.0.0/16"
+container_port  = 80
+desired_count   = 2
+cpu             = 512
+memory          = 1024
 container_image = "nginx:latest"
