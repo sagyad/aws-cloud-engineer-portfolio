@@ -1,0 +1,29 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project9-eks-app
+  labels:
+    app: project9-eks-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: project9-eks-app
+  template:
+    metadata:
+      labels:
+        app: project9-eks-app
+    spec:
+      containers:
+        - name: project9-eks-app
+          image: PLACEHOLDER_ECR_IMAGE
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: "128m"
+              memory: "256Mi"
+            limits:
+              cpu: "256m"
+              memory: "512Mi"
