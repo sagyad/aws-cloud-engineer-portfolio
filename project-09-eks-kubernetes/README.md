@@ -74,3 +74,4 @@ kubectl get pods
 kubectl get services
 kubectl apply -f k8s/
 
+
