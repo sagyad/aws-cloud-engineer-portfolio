@@ -11,5 +11,5 @@ desired_nodes      = 2
 min_nodes          = 1
 max_nodes          = 3
 app_port           = 5000
-cluster_version    = "1.30"
+cluster_version    = "1.32"
 node_instance_type = "t3.medium"
