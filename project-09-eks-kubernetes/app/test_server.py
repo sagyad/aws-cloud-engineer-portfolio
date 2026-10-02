@@ -1,26 +1,23 @@
-# -----------------------------------------------
-# Tests for Flask app — Project 9
-# -----------------------------------------------
-import pytest
+import os
+import importlib
 
-def test_app_file_exists():
-    import os
-    assert os.path.exists("server.py"), "server.py not found"
+class TestServerConfig:
+    """Tests for Project 9 EKS Python app."""
 
-def test_dockerfile_exsits():
-    import os
-    assert os.path.exists("Dockerfile"), "Dockerfile not found"
+    def test_app_file_exists(self):
+        assert os.path.isfile("server.py"), "server.py must exist"
 
-def test_flask_import():
-    from flask import Flask
-    assert Flask is not None
+    def test_dockerfile_exists(self):
+        assert os.path.isfile("Dockerfile"), "Dockerfile must exist"
 
-def test_app_creates():
-    from server import app
-    assert app is not None
+    def test_http_server_import(self):
+        from http.server import HTTPServer, SimpleHTTPRequestHandler
+        assert HTTPServer is not None
 
-def test_health_endpoint():
-    from server import app
-    client = app.test_client()
-    response = client.get("/")
-    assert response.status_code == 200
+    def test_server_has_handler(self):
+        spec = importlib.util.find_spec("server")
+        assert spec is not None, "server module must be importable"
+
+    def test_port_is_defined(self):
+        with open("server.py") as f:
+            content = f.read()

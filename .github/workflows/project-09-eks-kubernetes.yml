@@ -50,7 +50,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: project-09-eks-kubernetes/app
-        run: pip install flask pytest
+        run: pip install pytest
 
       - name: Run Tests
         working-directory: project-09-eks-kubernetes/app
