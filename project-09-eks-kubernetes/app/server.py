@@ -5,7 +5,9 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        self.wfile.write(b'<h1>Project 9 - EKS App by Sagar Yadav</h1><p>Running on Kubernetes - Updated Live via CI/CD Pipeline!</p>')
+        self.wfile.write(b'<h1>Project 9 - EKS App by Sagar Yadav</h1><p>Version 2.0 - Updated Live via CI/CD Pipeline!</p><p>Running on Kubernetes | EC2 | AWS EKS</p><p>Deployed: October 2026</p>')
+
+        
  
 if __name__ == "__main__":
     server = HTTPServer(('0.0.0.0', 3000), Handler)
