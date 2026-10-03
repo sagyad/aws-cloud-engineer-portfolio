@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: project9-eks-app
-          image: PLACEHOLDER_ECR_IMAGE
+          image: IMAGE_PLACEHOLDER
           ports:
             - containerPort: 5000
           resources:
