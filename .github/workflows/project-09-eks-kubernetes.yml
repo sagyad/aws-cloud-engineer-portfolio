@@ -151,5 +151,5 @@ jobs:
           sed -i "s|IMAGE_PLACEHOLDER|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" deployment.yaml
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
-          kubectl rollout status deployment/project9-eks-app --timeout=300s
+          kubectl rollout status deployment/project9-eks-app --timeout=600s
 
