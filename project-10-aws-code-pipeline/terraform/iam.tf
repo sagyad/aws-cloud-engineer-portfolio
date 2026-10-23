@@ -72,6 +72,12 @@ resource "aws_iam_role_policy" "codepipeline" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
+      # NEW — allows CodePipeline to use the GitHub CodeStar Connection
+      {
+        Effect   = "Allow"
+        Action   = ["codeconnections:UseConnection"]
+        Resource = var.codestar_connection_arn
+      },
       {
         Effect = "Allow"
         Action = [
@@ -139,7 +145,7 @@ resource "aws_iam_role_policy" "codebuild" {
           "s3:GetObject",
           "s3:PutObject"
         ]
-        # Resource = "${aws_s3_bucket.artifacts.arn}/*"
+        Resource = "${aws_s3_bucket.artifacts.arn}/*"
       },
       {
         Effect = "Allow"

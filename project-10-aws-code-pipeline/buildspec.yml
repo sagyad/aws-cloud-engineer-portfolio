@@ -16,7 +16,7 @@ phases:
   build:
     commands:
       - echo Building Docker image...
-      - docker build -t $ECR_REPO_URL:latest .
+      - docker build -t $ECR_REPO_URL:latest project-10-aws-code-pipeline/
       - docker tag $ECR_REPO_URL:latest $ECR_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION
 
   # POST_BUILD: Push image to ECR and create imagedefinitions.json for ECS

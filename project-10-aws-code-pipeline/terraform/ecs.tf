@@ -63,9 +63,6 @@ resource "aws_ecs_service" "main" {
     container_port   = 80
   }
 
-  deployment_configuration {
-    strategy = "BLUE_GREEN"
-  }
 
   lifecycle {
     ignore_changes = [task_definition]

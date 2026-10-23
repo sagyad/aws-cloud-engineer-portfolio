@@ -46,7 +46,7 @@ resource "aws_codebuild_project" "main" {
   # Source — CodePipeline feeds the source code
   source {
     type      = "CODEPIPELINE"
-    buildspec = "buildspec.yml" # Looks for this file in your repo root
+    buildspec = "project-10-aws-code-pipeline/buildspec.yml" # Looks for this file in your repo root
   }
 
   # Build logs go to CloudWatch for debugging
