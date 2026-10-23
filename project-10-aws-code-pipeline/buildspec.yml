@@ -1,0 +1,35 @@
+
+# buildspec.yml — Instructions for CodeBuild
+# This file lives in your GitHub repo root (NOT in terraform/)
+# CodeBuild reads this and executes each phase in order.
+# yaml-language-server: $schema=
+version: 0.2
+
+phases:
+  # PRE_BUILD: Login to ECR so we can push images
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URL
+
+  # BUILD: Build the Docker image and tag it
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t $ECR_REPO_URL:latest .
+      - docker tag $ECR_REPO_URL:latest $ECR_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION
+
+  # POST_BUILD: Push image to ECR and create imagedefinitions.json for ECS
+  post_build:
+    commands:
+      - echo Pushing Docker image to ECR...
+      - docker push $ECR_REPO_URL:latest
+      - docker push $ECR_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo Creating imagedefinitions.json...
+      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $ECR_REPO_URL:latest > imagedefinitions.json
+
+# imagedefinitions.json is passed to the Deploy stage — tells ECS which image to pull
+artifacts:
+  files:
+    - imagedefinitions.json
+
